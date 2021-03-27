@@ -44,6 +44,9 @@
                                 class="mx-2">&bullet;</span> <a href="#">{{feed.post_type}}</a></div>
                         <p>{{feed.description}}</p>
                         <p><a href="{% url 'feed_details' feed.id %}">Continue Reading...</a></p>
+                        <div>
+                            <a href="{% url 'update_feed' feed.id%}" class="btn btn-primary mr-2 mb-2">Update Post</a>
+                        </div>
                     </div>
                 </div>
             </div>

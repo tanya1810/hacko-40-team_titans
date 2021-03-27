@@ -22,6 +22,20 @@ def feeds_home(request):
 	return render(request, 'home/all_feeds.html', context)
 
 @login_required
+def post_feed(request):
+	if(request.method == 'POST'):
+		form = AnswerForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.instance.author = request.user
+			form.save()
+	
+	form = AnswerForm()
+	context = {
+		'form' : form,
+	}
+	return render(request, 'home/post_feed.html', context)
+
+@login_required
 def delete_feed(request, pk):
 	feed = Feed.objects.get(id=pk)
 	if(request.user == feed.author):
@@ -45,7 +59,7 @@ def my_post(request):
 		'form' : form,
 		'feeds'	 : feeds,
 	}
-	return render(request, 'home/all_feeds.html', context)
+	return render(request, 'home/my_feeds.html', context)
 
 @login_required
 def update_feed(request, id=None):
