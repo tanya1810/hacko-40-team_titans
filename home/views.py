@@ -4,6 +4,7 @@ from user.models import User
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import datetime
 
 @login_required
 def feeds_home(request):
@@ -19,7 +20,7 @@ def feeds_home(request):
 		'form' : form,
 		'feeds'	 : feeds,
 	}
-	return render(request, 'home/index.html', context)
+	return render(request, 'home/all_feeds.html', context)
 
 @login_required
 def post_feed(request):
@@ -28,6 +29,7 @@ def post_feed(request):
 		if form.is_valid():
 			form.instance.author = request.user
 			form.save()
+			return redirect('feeds')
 	
 	form = AnswerForm()
 	context = {
@@ -51,6 +53,7 @@ def my_post(request):
 		form = AnswerForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.instance.author = request.user
+			form.instance.date = datetime.date.today()
 			form.save()
 	
 	form = AnswerForm()
@@ -88,6 +91,7 @@ def feed_details(request, pk):
 		if form.is_valid():
 			form.instance.by_user = request.user
 			form.instance.feed = feed
+			form.instance.date = datetime.date.today()
 			form.save()
 	form = AddComment()
 	context = {

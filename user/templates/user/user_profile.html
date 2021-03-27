@@ -14,16 +14,19 @@
 						<h1>{{user.name}}</h1>
 						<h3 class="mb-3">Rating: {{user.ratings}}/5</h3>
                         <h3 class="mb-3">Total Coins: {{user.coins}}</h3>
+						{% if request.user.id == user.id %}
 						<div>
 							<a href="{% url 'post-feed' %}" class="btn btn-primary mr-2 mb-2">POST A FEED</a>
                             <a href="{% url 'post_resource' %}" class="btn btn-primary mr-2 mb-2">POST A RESOURCE</a>
 						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+{% if request.user.id != user.id %}
 <div class="site-section bg-image2 overlay" id="post" style="background-image: url('static/home/images/hero_1.jpg');">
 	<div class="container">
 		<div class="row mb-5">
@@ -44,7 +47,7 @@
 		</div>
 	</div>
 </div>
-
+{% endif %}
 
 <div class="site-section" id="our-team-section">
 	<div class="container">
@@ -55,6 +58,7 @@
             </div>
         </div>
 		<div class="row mt-5">
+			{% if resources %}
             {% for resource in resources %}
 			<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
 				<div class="person">
@@ -74,6 +78,13 @@
 				</div>
 			</div>
             {% endfor %}
+			{% else %}
+			<div class="row mb-5">
+				<div class="col-12 text-center">
+					<h4 class="section-title mb-3">No Resources posted by {{user.name}}!</h4>
+				</div>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -87,13 +98,14 @@
             </div>
         </div>
         <div class="row">
+			{% if feeds %}
             {% for feed in feeds %}
             <div class="col-md-12 col-lg-12 mb-4 mb-lg-4">
                 <div class="h-entry">
                     <!-- <img src="{%static 'home/images/img_1.jpg' %}" alt="Image" class="img-fluid w-100"> -->
                     <div style="border-left: 10px solid #4285f4; padding: 20px;">
                         <h2><a href="#">{{feed.title}}</a></h2>
-                        <div class="meta mb-4">{{feed.author.name}} <span class="mx-2">&bullet;</span> Jan 18, 2019<span
+                        <div class="meta mb-4"><a href="{% url 'user_profile' feed.author.id %}">{{feed.author.name}}</a> <span class="mx-2">&bullet;</span> {{feed.date}}<span
                                 class="mx-2">&bullet;</span> <a href="#">{{feed.post_type}}</a></div>
                         <p>{{feed.description}}</p>
                         <p><a href="{% url 'feed_details' feed.id %}">Continue Reading...</a></p>
@@ -103,7 +115,14 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            {% endfor %} 
+			{% else %}
+			<div class="row mb-5">
+				<div class="col-12 text-center">
+					<h4 class="section-title mb-3">No Feeds Posted by {{user.name}}!</h4>
+				</div>
+			</div>
+			{% endif %}
             
         </div>
     </div>

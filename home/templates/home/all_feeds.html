@@ -15,7 +15,7 @@
                         <!-- <p class="mb-5">To keep you updated.</p> -->
                         <br><br>
                         <div>
-                            <a href="#" class="btn btn-primary mr-2 mb-2">Post a Feed</a>
+                            <a href="{% url 'post-feed' %}" class="btn btn-primary mr-2 mb-2">Post a Feed</a>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <!-- <img src="{%static 'home/images/img_1.jpg' %}" alt="Image" class="img-fluid w-100"> -->
                     <div style="border-left: 10px solid #4285f4; padding: 20px;">
                         <h2><a href="#">{{feed.title}}</a></h2>
-                        <div class="meta mb-4">{{feed.author.name}} <span class="mx-2">&bullet;</span> Jan 18, 2019<span
+                        <div class="meta mb-4"><a href="{% url 'user_profile' feed.author.id %}">{{feed.author.name}}</a> <span class="mx-2">&bullet;</span> {{feed.date}}<span
                                 class="mx-2">&bullet;</span> <a href="#">{{feed.post_type}}</a></div>
                         <p>{{feed.description}}</p>
                         <p><a href="{% url 'feed_details' feed.id %}">Continue Reading...</a></p>

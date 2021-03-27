@@ -4,7 +4,7 @@ from .forms import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from Blockchainbackend.block import write_block, check_integrity
+# from Blockchainbackend.block import write_block, check_integrity
 
 # Create your views here.
 @login_required
@@ -157,7 +157,7 @@ def my_bought_resources(request):
 def buy_resource(request, pk):
     resource = Resource.objects.get(id=pk)
     if(request.user.coins >= resource.cost):
-        write_block(str(request.user), str(resource.owner), resource.cost, resource.title)
+        # write_block(str(request.user), str(resource.owner), resource.cost, resource.title)
         resource.buyer.add(request.user)
         resource.save()
         u = request.user

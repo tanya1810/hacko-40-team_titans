@@ -86,8 +86,7 @@
                 <div class="h-entry">
                     <div style="border-left: 10px solid #4285f4; padding: 20px;">
                         <h2><a href="#">{{ feed.title}}</a></h2>
-                        <div class="meta mb-4">{{ feed.author.name }} <span class="mx-2">&bullet;</span> Jan 18,
-                            2019<span class="mx-2">&bullet;</span> <a href="#">{{ feed.post_type }}</a></div>
+                        <div class="meta mb-4"><a href="{% url 'user_profile' feed.author.id %}">{{ feed.author.name }}</a> <span class="mx-2">&bullet;</span> {{feed.date}}<span class="mx-2">&bullet;</span> <a href="#">{{ feed.post_type }}</a></div>
                         <p>{{ feed.description }}</p>
                         {% if feed.author == request.user %}
                         <div>
@@ -117,9 +116,8 @@
                         <div class="user d-flex flex-row align-items-center"> <img
                                 src="{%static 'home/images/person_3.jpg' %}" width="30"
                                 class="user-img rounded-circle mr-2"> <span><small
-                                    class="font-weight-bold text-primary">{{ commen.by_user.name }}</small> <small
-                                    class="font-weight-bold">{{ commen.text }}</small></span> </div> <small>2 days
-                            ago</small>
+                                    class="font-weight-bold text-primary"><a href="{% url 'user_profile' commen.by_user.id %}">{{ commen.by_user.name }}</a></small> <small
+                                    class="font-weight-bold">{{ commen.text }}</small></span> </div> <small>{{commen.date}}</small>
                     </div>
                     {% if commen.by_user == request.user %}<br>
                     <a href="{% url 'delete-comment' commen.id %}">[Delete]</a>
