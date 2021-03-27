@@ -43,7 +43,7 @@ def delete_feed(request, pk):
 	if(request.user == feed.author):
 		feed.delete()
 	else:
-			messages.add_message(request, messages.INFO, 'You are not authorized to delete this feed.')
+		messages.add_message(request, messages.INFO, 'You are not authorized to delete this feed.')
 
 	return redirect('feeds')
 

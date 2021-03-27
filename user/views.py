@@ -50,8 +50,8 @@ def user_profile_resources(request, pk):
         form = RatingsForm(request.POST)
         if form.is_valid():
             form.save()
-            form.rating_of = user
-            form.rated_by = request.user
+            form.instance.rating_of = user
+            form.instance.rated_by = request.user
             form.save()
             user.ratings = calculate_ratings(pk)
             user.save()

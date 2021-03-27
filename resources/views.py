@@ -160,9 +160,12 @@ def buy_resource(request, pk):
         # write_block(str(request.user), str(resource.owner), resource.cost, resource.title)
         resource.buyer.add(request.user)
         resource.save()
+        v = resource.owner
         u = request.user
         u.coins -= resource.cost
+        v.coins += resource.cost
         u.save()
+        v.save()
         return redirect('my_bought_resources')
     else:
         messages.add_message(request, messages.INFO, 'you don\'t have enough ecoins.')

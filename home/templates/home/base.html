@@ -53,7 +53,7 @@
                                 <li class="has-children">
                                     <a href="#about-section" class="nav-link">Feeds</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="{% url 'feeds' %}" target="_blank" class="nav-link"><span class="text-primary">All Feeds</span></a></li>
+                                        <li><a href="{% url 'feeds' %}" class="nav-link"><span class="text-primary">All Feeds</span></a></li>
                                         <li><a href="{% url 'my_feeds' %}" class="nav-link">My Feeds</a></li>
                                         <li><a href="{% url 'post-feed' %}" class="nav-link">Post Something</a></li>
                                         <!-- <li class="has-children">
@@ -69,7 +69,7 @@
                                 <li class="has-children">
                                     <a href="#" class="nav-link">Resources</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="{% url 'all-resources' %}" target="_blank" class="nav-link"><span class="text-primary">All Resources</span></a></li>
+                                        <li><a href="{% url 'all-resources' %}" class="nav-link"><span class="text-primary">All Resources</span></a></li>
                                         <li><a href="{% url 'post_resource' %}" class="nav-link">Add Resources</a></li>
                                         <li><a href="{% url 'my_bought_resources' %}" class="nav-link">Bought Resources</a></li>
                                         <li><a href="{% url 'my_posted_resources' %}" class="nav-link">Posted Resources</a></li>
@@ -78,7 +78,7 @@
                                 <li class="has-children">
                                     <a href="#" class="nav-link">Coupons</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="{% url 'available' %}" target="_blank" class="nav-link"><span class="text-primary">All Coupons</span></a></li>
+                                        <li><a href="{% url 'available' %}" class="nav-link"><span class="text-primary">All Coupons</span></a></li>
                                         <li><a href="{% url 'purchased' %}" class="nav-link">Purchased Coupons</a></li>
                                     </ul>
                                 </li>
@@ -86,7 +86,7 @@
                                 <li class="has-children">
                                     <a href="#" class="nav-link">Hey {{ request.user.name }}</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="{% url 'logout' %}" target="_blank" class="nav-link"><span class="text-primary">Logout</span></a></li>
+                                        <li><a href="{% url 'logout' %}" class="nav-link"><span class="text-primary">Logout</span></a></li>
                                         <li><a href="{% url 'user_profile' request.user.id %}" class="nav-link">Profile</a></li>
                                         <li><a href="#" class="nav-link">{{request.user.coins}} Coins</a></li>
                                     </ul>

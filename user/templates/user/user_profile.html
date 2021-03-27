@@ -109,9 +109,12 @@
                                 class="mx-2">&bullet;</span> <a href="#">{{feed.post_type}}</a></div>
                         <p>{{feed.description}}</p>
                         <p><a href="{% url 'feed_details' feed.id %}">Continue Reading...</a></p>
+						{% if request.user.id == user.id %}
                         <div>
                             <a href="{% url 'update_feed' feed.id%}" class="btn btn-primary mr-2 mb-2">Update Post</a>
+                            <a href="{% url 'delete_feed' feed.id%}" class="btn btn-primary mr-2 mb-2">Delete Post</a>
                         </div>
+						{% endif %}
                     </div>
                 </div>
             </div>
