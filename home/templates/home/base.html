@@ -87,7 +87,7 @@
                                     <a href="#" class="nav-link">Hey {{ request.user.name }}</a>
                                     <ul class="dropdown arrow-top">
                                         <li><a href="{% url 'logout' %}" target="_blank" class="nav-link"><span class="text-primary">Logout</span></a></li>
-                                        <li><a href="#" class="nav-link">Profile</a></li>
+                                        <li><a href="{% url 'user_profile' user.id %}" class="nav-link">Profile</a></li>
                                         <li><a href="#" class="nav-link">{{request.user.coins}} Coins</a></li>
                                     </ul>
                                 </li>

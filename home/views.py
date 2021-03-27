@@ -19,7 +19,7 @@ def feeds_home(request):
 		'form' : form,
 		'feeds'	 : feeds,
 	}
-	return render(request, 'home/all_feeds.html', context)
+	return render(request, 'home/index.html', context)
 
 @login_required
 def post_feed(request):
