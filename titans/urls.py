@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('user.urls')),
     path('', include('resources.urls')),
+    path('', include('coupons.urls')),
 ]
