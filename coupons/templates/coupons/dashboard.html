@@ -11,15 +11,17 @@
                     class="img-fluid img-absolute">
                 <div class="row mb-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="col-lg-6 mr-auto">
-                        <h1>All Coupons</h1>
+                        <h1>Dashboard for Company</h1>
                         <br><br>
+                        <div>
+                            <a href="{% url 'add' %}" class="btn btn-primary mr-2 mb-2">Add a Coupon</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <div class="site-section" id="features-section">
@@ -31,11 +33,12 @@
 					<div class="unit-4-icon mb-3">
                         <span class="icon-wrap"><span class="text-primary icon-store_mall_directory"></span></span>					</div>
 					<div>
-						<h3>{{ coupon.company.name }}</h3>
-                        <h5><i class="fas fa-coins"></i> {{ coupon.cost }}</h5>
-						<p>{{ coupon.description }}</p>
+						<h3>{{ coupon.coupon.company.name }}</h3>
+                        <h5><i class="fas fa-coins"></i> {{ coupon.coupon.cost }}</h5>
+						<p>{{ coupon.coupon.description }}</p>
+                        <h3>{{ coupon.unique_code }}</h3>
 						<div>
-                            <a href="{% url 'available' coupon.id %}" class="btn btn-primary mr-2 mb-2">Buy Now</a>
+                            <a href="{% url 'issued' coupon.id %}" class="btn btn-primary mr-2 mb-2">Delete</a>
                         </div>
 					</div>
 				</div>

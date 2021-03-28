@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.contrib import messages
@@ -35,16 +35,38 @@ def purchased(request, id=None):
 	return render(request, 'coupons/purchased_coupons.html', context)
 
 def issued_coupons(request, pk = None):	
-	q = request.GET['q']
-	coupon = PurchasedCoupons.objects.filter(coupon__company=request.user)
-	if(q):
-		coupon = coupon.filter(Q(unique_code__icontains=q))
+	# q = request.GET['q']
+	coupons = PurchasedCoupons.objects.filter(coupon__company=request.user)
+	# if(q):
+	# 	coupons = coupon.filter(Q(unique_code__icontains=q))
 	if pk:
-		to_del = coupon.filter(id=pk)
+		to_del = coupons.filter(id=pk)
 		to_del.delete()
 
-
 	context = {
-		'coupon': coupon,
+		'coupons': coupons,
 	}
 	return render(request, 'coupons/dashboard.html', context)
+
+def dashboard(request):
+	coupons = PurchasedCoupons.objects.filter(coupon__company=request.user)
+	context = {
+		'coupons': coupons,
+	}
+	return render(request, 'coupons/dashboard.html', context)
+
+
+def add_coupon(request):
+	if(request.method == 'POST'):
+		form = AddCoupons(request.POST)
+		if form.is_valid():
+			form.instance.company = request.user
+			form.instance.active = True
+			form.save()
+			return redirect('dashboard')
+	
+	form = AddCoupons()
+	context = {
+		'form' : form,
+	}
+	return render(request, 'coupons/add_coupon.html', context)

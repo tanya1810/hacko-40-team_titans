@@ -80,6 +80,9 @@
                                     <ul class="dropdown arrow-top">
                                         <li><a href="{% url 'available' %}" class="nav-link"><span class="text-primary">All Coupons</span></a></li>
                                         <li><a href="{% url 'purchased' %}" class="nav-link">Purchased Coupons</a></li>
+                                        {% if user.is_company %}
+                                        <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 {% if user.is_authenticated %}
