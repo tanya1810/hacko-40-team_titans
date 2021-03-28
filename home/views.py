@@ -5,9 +5,14 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import datetime
+# from Blockchainbackend.block import write_block, check_integrity
+from TTR.app import balance
+
 
 @login_required
 def feeds_home(request):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	if(request.method == 'POST'):
 		form = AnswerForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -17,6 +22,7 @@ def feeds_home(request):
 	form = AnswerForm()
 	feeds   = Feed.objects.all()
 	context = {
+		'user_balance' : user_balance,
 		'form' : form,
 		'feeds'	 : feeds,
 	}
@@ -24,6 +30,8 @@ def feeds_home(request):
 
 @login_required
 def post_feed(request):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	if(request.method == 'POST'):
 		form = AnswerForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -33,12 +41,15 @@ def post_feed(request):
 	
 	form = AnswerForm()
 	context = {
+		'user_balance' : user_balance,
 		'form' : form,
 	}
 	return render(request, 'home/post_feed.html', context)
 
 @login_required
 def delete_feed(request, pk):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	feed = Feed.objects.get(id=pk)
 	if(request.user == feed.author):
 		feed.delete()
@@ -49,6 +60,8 @@ def delete_feed(request, pk):
 
 @login_required
 def my_post(request):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	if(request.method == 'POST'):
 		form = AnswerForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -59,6 +72,7 @@ def my_post(request):
 	form = AnswerForm()
 	feeds   = Feed.objects.filter(author=request.user)
 	context = {
+		'user_balance' : user_balance,
 		'form' : form,
 		'feeds'	 : feeds,
 	}
@@ -66,6 +80,8 @@ def my_post(request):
 
 @login_required
 def update_feed(request, id=None):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	feed = Feed.objects.get(id=id)
 	if request.method == 'POST':
 		if(request.user == feed.author):
@@ -77,12 +93,15 @@ def update_feed(request, id=None):
 			messages.add_message(request, messages.INFO, 'You are not authorized to edit this feed.')
 	form = UpdateFeedForm(instance=feed)
 	context = {
+		'user_balance' : user_balance,
 		'form' : form,
 	}
 	return render(request, 'home/update_feed.html', context)
 
 @login_required
 def feed_details(request, pk):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	feed = Feed.objects.get(id = pk)
 	comment = Comments.objects.filter(feed=feed).order_by('-id')
 	
@@ -95,6 +114,7 @@ def feed_details(request, pk):
 			form.save()
 	form = AddComment()
 	context = {
+		'user_balance' : user_balance,
 		'feed' : feed,
 		'comment' : comment,
 		'form' : form,
