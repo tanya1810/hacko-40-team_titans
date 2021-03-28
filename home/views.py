@@ -84,7 +84,7 @@ def update_feed(request, id=None):
 @login_required
 def feed_details(request, pk):
 	feed = Feed.objects.get(id = pk)
-	comment = Comments.objects.filter(feed=feed).order_by('-id')
+	comment = Comments.objects.filter(feed=feed).order_by('id')
 	
 	if(request.method == 'POST'):
 		form = AddComment(request.POST)
