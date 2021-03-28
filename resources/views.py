@@ -4,11 +4,15 @@ from .forms import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from TTR.app import balance
+
 # from Blockchainbackend.block import write_block, check_integrity
 
 # Create your views here.
 @login_required
 def all_resources(request):
+    user_account = request.user.account_no
+    user_balance = balance(user_account)
     year = request.GET.get('year') or None
     branch = request.GET.get('branch') or None
     subject = request.GET.get('subject') or None
@@ -25,12 +29,15 @@ def all_resources(request):
         resources = resources.filter(subject__yr_branch__year=year)
 
     context = {
+        'user_balance' : user_balance,
         'resources' : resources,
     }
     return render(request, 'resources/all_resources.html', context)
 
 @login_required
 def post_resource(request):
+    user_account = request.user.account_no
+    user_balance = balance(user_account)
     if request.method == "POST":
         form = NewResourceForm(request.POST, request.FILES)
         if form.is_valid():
@@ -56,6 +63,7 @@ def post_resource(request):
         form = NewResourceForm()
 
     context = {
+        'user_balance' : user_balance,
         'form' : form,
     }
 
@@ -112,6 +120,7 @@ def dislike_resource_3(request, pk):
 
 @login_required
 def update_resource(request, pk):
+    user_balance = request.user.account_no
     resource = Resource.objects.get(id=pk)
     if(Resource.objects.get(id=pk).owner == request.user):
         if(request.method == 'POST'):
@@ -121,6 +130,7 @@ def update_resource(request, pk):
                 return redirect('my_posted_resources')
         form = UpdateResourceForm(instance = resource)
         context = {
+            'user_balance' : user_balance,
             'form' : form,
         }
     else:
@@ -139,16 +149,22 @@ def delete_resource(request, pk):
 
 @login_required
 def my_posted_resources(request):
+    user_account = request.user.account_no
+    user_balance = balance(user_account)
     resources = Resource.objects.filter(owner=request.user)
     context = {
+        'user_balance' : user_balance,
         'resources': resources,
     } 
     return render(request, 'resources/my_posted_resources.html', context)
 
 @login_required
 def my_bought_resources(request):
+    user_account = request.user.account_no
+    user_balance = balance(user_account)
     resources = Resource.objects.filter(buyer=request.user)
     context = {
+        'user_balance' : user_balance,
         'resources': resources,
     } 
     return render(request, 'resources/my_bought_resources.html', context)
@@ -173,10 +189,13 @@ def buy_resource(request, pk):
     return redirect('all-resources')
 
 def pdf(request, id):
+    user_account = request.user.account_no
+    user_balance = balance(user_account)
     resource = Resource.objects.get(id = id)
 
     context = {
-        'resource' : resource
+        'user_balance' : user_balance,
+        'resource' : resource,
     }
 
     return render(request, 'resources/pdf.html', context)

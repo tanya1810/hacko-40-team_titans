@@ -4,9 +4,12 @@ from .forms import *
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 from django.db.models import Q
+from TTR.app import balance
 
 # Create your views here.
 def available(request, id=None):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	user = request.user
 	if id:
 		coupon = AvailableCoupons.objects.get(id=id)
@@ -23,18 +26,24 @@ def available(request, id=None):
 	user = request.user
 
 	context = {
+		'user_balance' : user_balance,
 		'coupons' : coupons,
 	}
 	return render(request, 'coupons/available_coupons.html', context)
 
 def purchased(request, id=None):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	coupons = PurchasedCoupons.objects.filter(owner=request.user)
 	context = {
+		'user_balance' : user_balance,
 		'coupons': coupons,
 	}
 	return render(request, 'coupons/purchased_coupons.html', context)
 
 def issued_coupons(request, pk = None):	
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	# q = request.GET['q']
 	coupons = PurchasedCoupons.objects.filter(coupon__company=request.user)
 	# if(q):
@@ -44,19 +53,25 @@ def issued_coupons(request, pk = None):
 		to_del.delete()
 
 	context = {
+		'user_balance' : user_balance,
 		'coupons': coupons,
 	}
 	return render(request, 'coupons/dashboard.html', context)
 
 def dashboard(request):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	coupons = PurchasedCoupons.objects.filter(coupon__company=request.user)
 	context = {
+		'user_balance' : user_balance,
 		'coupons': coupons,
 	}
 	return render(request, 'coupons/dashboard.html', context)
 
 
 def add_coupon(request):
+	user_account = request.user.account_no
+	user_balance = balance(user_account)
 	if(request.method == 'POST'):
 		form = AddCoupons(request.POST)
 		if form.is_valid():
@@ -67,6 +82,7 @@ def add_coupon(request):
 	
 	form = AddCoupons()
 	context = {
+		'user_balance' : user_balance,
 		'form' : form,
 	}
 	return render(request, 'coupons/add_coupon.html', context)
