@@ -31,15 +31,9 @@ def available(request, id=None):
 	}
 	return render(request, 'coupons/available_coupons.html', context)
 
-def purchased(request, id=None):
-	user_account = request.user.account_no
-	user_balance = balance(user_account)
-	coupons = PurchasedCoupons.objects.filter(owner=request.user)
-	context = {
-		'user_balance' : user_balance,
-		'coupons': coupons,
-	}
-	return render(request, 'coupons/purchased_coupons.html', context)
+
+
+
 
 def issued_coupons(request, pk = None):	
 	user_account = request.user.account_no
